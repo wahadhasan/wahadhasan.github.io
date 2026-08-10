@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kazi Wahadul Hasan — Industrial Engineering & Operations Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1B2A4A;
+    --blue: #2E5090;
+    --blue-dim: #6E88B8;
+    --amber: #C97A1A;
+    --paper: #F6F7F4;
+    --paper-2: #EFF1EB;
+    --graphite: #5B6470;
+    --hairline: #DBDFD6;
+    --white: #FFFFFF;
+    --max: 880px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--amber); color: var(--white); }
+
+  a { color: var(--blue); text-decoration: none; border-bottom: 1px solid var(--blue-dim); transition: border-color .15s ease, color .15s ease; }
+  a:hover { color: var(--amber); border-color: var(--amber); }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+
+  /* Background grid — technical drafting paper feel */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(var(--hairline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity: 0.35;
+  }
+
+  /* NAV */
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(246, 247, 244, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .nav-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+  .nav-links a { border-bottom: none; color: var(--graphite); }
+  .nav-links a:hover { color: var(--amber); }
+
+  /* HERO */
+  .hero {
+    padding: 88px 0 64px;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: var(--blue);
+  }
+  h1.hero-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.04;
+    margin: 0 0 14px;
+    letter-spacing: -0.015em;
+  }
+  .hero-title {
+    font-size: 19px;
+    color: var(--graphite);
+    max-width: 560px;
+    margin: 0 0 30px;
+  }
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+  }
+  .hero-links a { border-bottom: 1px solid var(--hairline); color: var(--ink); }
+  .hero-links a:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* Network graph canvas */
+  .graph-holder {
+    margin-top: 48px;
+    border: 1px solid var(--hairline);
+    background: var(--white);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .graph-caption {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--graphite);
+    padding: 8px 14px;
+    border-top: 1px solid var(--hairline);
+    background: var(--paper-2);
+  }
+
+  /* SECTIONS */
+  section { padding: 56px 0; border-bottom: 1px solid var(--hairline); }
+  section:last-of-type { border-bottom: none; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+  .sec-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--amber);
+  }
+  h2.sec-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 27px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  p.body-text { max-width: 640px; color: #33405C; }
+
+  /* Research interests */
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+  }
+  .interest-card {
+    border: 1px solid var(--hairline);
+    background: var(--white);
+    padding: 20px 22px;
+    border-radius: 3px;
+  }
+  .interest-card h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15.5px;
+    margin: 0 0 8px;
+  }
+  .interest-card p {
+    font-size: 14.5px;
+    color: var(--graphite);
+    margin: 0;
+  }
+
+  /* Timeline (education/experience) */
+  .tl-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .tl-item:first-child { border-top: none; }
+  .tl-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--blue);
+    padding-top: 3px;
+  }
+  .tl-role { font-weight: 600; font-size: 15.5px; margin: 0 0 4px; }
+  .tl-org { color: var(--graphite); font-size: 14.5px; margin: 0 0 6px; }
+  .tl-desc { font-size: 14px; color: #46536E; margin: 0; }
+
+  /* Publications */
+  .pub-list { list-style: none; margin: 0; padding: 0; }
+  .pub-item {
+    padding: 20px 0;
+    border-top: 1px solid var(--hairline);
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 16px;
+  }
+  .pub-item:first-child { border-top: none; }
+  .pub-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--amber);
+    padding-top: 2px;
+  }
+  .pub-title { font-weight: 600; font-size: 15.5px; margin: 0 0 4px; }
+  .pub-meta { font-size: 13.5px; color: var(--graphite); margin: 0; font-family: 'IBM Plex Mono', monospace; }
+
+  /* Skills */
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+  .skill-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    border: 1px solid var(--hairline);
+    background: var(--white);
+    padding: 7px 13px;
+    border-radius: 999px;
+    color: #33405C;
+  }
+
+  /* Contact / footer */
+  footer {
+    padding: 56px 0 60px;
+  }
+  .contact-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 34px;
+  }
+  .contact-item .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--graphite);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .contact-item a { font-size: 15px; }
+  .foot-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--graphite);
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .edit-flag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--amber);
+    background: #FBEFE0;
+    border: 1px solid #F0D6AC;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 600px) {
+    .tl-item { grid-template-columns: 1fr; gap: 6px; }
+    .nav-links { gap: 14px; font-size: 12px; }
+    .hero { padding: 64px 0 44px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-name">Kazi Wahadul Hasan</div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#experience">Experience</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" id="top">
+    <div class="hero-eyebrow">Industrial Engineering &amp; Operations Research</div>
+    <h1 class="hero-name">Kazi Wahadul Hasan</h1>
+    <p class="hero-title">
+      PhD Candidate working on developing models and algorithms for stochastic and robust mixed integer programming problems with applications in supply chain, healthcare, machine learning, and transportation system.
+      
+    </p>
+    <div class="hero-links">
+      <a href="https://drive.google.com/file/d/1W0CkI1RYWhmIdPvCw4oUZVIns_PSgGvg/view?usp=drive_link">Resume (PDF)</a>
+      <a href="https://www.researchgate.net/profile/Kazi-Wahadul-Hasan">ResearchGate</a>
+      <a href="https://github.com/wahadhasan">GitHub</a>
+      <a href="https://orcid.org/0000-0003-4966-4126">Orcid</a>
+    </div>
+
+    <div class="graph-holder">
+      <img src="images/benders_diagram.png" alt="Toy example showing the cut generation for proposed incremental Benders and L-shaped multi-cut Benders decomposition" style="display:block; width:100%; height:auto;">
+      <div class="graph-caption">figure: cut generation in incremental Benders decomposition </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <span class="sec-num">§01</span>
+      <h2 class="sec-title">About</h2>
+    </div>
+    <p class="body-text">
+      I am a PhD candidate in industrial engineering with a major in operations research, focused on building
+      optimization models and algorithms that hold up under real-world uncertainty. My research sits between theory and application: I care about provable
+      guarantees, but I test everything against real operational data before I trust it.
+      
+    </p>
+    <p class="body-text">
+      Currently, I am working on developing an algorithmic framework for two-stage distributionally robust bilevel optimization problem. Before this, I studied large-scale decomposition algorithms and proposed a novel decomposition framework for two-stage and multi-stage stochastic programs. I also have strong expertise in heuristic algorithms and applied them in inventory optimization and network design problems. Currently, I split my time between methodological
+      research and applied collaborations with industry partners in real-world logistics and supply chain problems.
+      
+    </p>
+  </section>
+
+  <section id="research">
+    <div class="sec-head">
+      <span class="sec-num">§02</span>
+      <h2 class="sec-title">Research interests</h2>
+    </div>
+    <div class="interests-grid">
+      <div class="interest-card">
+        <h3>Stochastic optimization</h3>
+        <p>Two-stage and multi-stage stochastic programs; sample average approximation; scenario reduction and aggregation.</p>
+      </div>
+      <div class="interest-card">
+        <h3>Network flows & logistics</h3>
+        <p>Min-cost flow, vehicle routing, and hub-and-spoke location-allocation under demand and supply uncertainty.</p>
+      </div>
+      <div class="interest-card">
+        <h3>Robust and Distributionally robust optimization</h3>
+        <p>Facility planning and capacity expansion using distributionally robust bilevel programming, robust counterpart.</p>
+      </div>
+      <div class="interest-card">
+        <h3>Algorithm design</h3>
+        <p>Large-scale exact algorithms for discrete optimization problems, Heuristic algorithms with worst-case performance guarantees.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head">
+      <span class="sec-num">§03</span>
+      <h2 class="sec-title">Education & experience</h2>
+    </div>
+
+
+    <div class="tl-item">
+      <div class="tl-date">2022 — present</div>
+      <div>
+        <p class="tl-role">PhD, Industrial Engineering (Operations Research) </p>
+        <p class="tl-org">Arizona State University</p>
+        <p class="tl-desc">Dissertation: "Models and algorithms for large-scale multi-stage stochastic and robust optimization problems." Advised by Prof. Pitu Mirchandani.</p>
+      </div>
+    </div>
+
+<div class="tl-item">
+      <div class="tl-date">2017 — 2021</div>
+      <div>
+        <p class="tl-role">M.Sc, Industrial & Production Engineering</p>
+        <p class="tl-org">Bangladesh University of Engineering and Technology</p>
+        <p class="tl-desc">Undergraduate thesis on developing a closed-loop green supply chain model with disruption risks.</p>
+      </div>
+    </div>
+
+
+    <div class="tl-item">
+      <div class="tl-date">2013 — 2017</div>
+      <div>
+        <p class="tl-role">B.Sc, Industrial & Systems Engineering</p>
+        <p class="tl-org">Bangladesh University of Engineering and Technology</p>
+        <p class="tl-desc">Undergraduate thesis on inventory optimization under disruption risk.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="publications">
+    <div class="sec-head">
+      <span class="sec-num">§04</span>
+      <h2 class="sec-title">Selected publications</h2>
+    </div>
+    <p class="pub-group-label">Published</p>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <span class="pub-tag">[J1]</span>
+        <div>
+          <p class="pub-title">Multi-objective closed-loop green supply chain model with disruption risk</p>
+          <p class="pub-meta">Hasan, K. W., Ali, S. M., Paul, S. K., and Kabir, G. — Applied Soft Computing 136 (2023)</p>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-tag">[J2]</span>
+        <div>
+          <p class="pub-title">A pricing model for real-estate business in Bangladesh incorporating the uncertainty in buyer's readiness: considerations during COVID-19 pandemic</p>
+          <p class="pub-meta">Hasan, K. W. and Hanif, M. B. — SN Business & Economics 2.10 (2022)</p>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-tag">[J3]</span>
+        <div>
+          <p class="pub-title">Integrated economic design of quality control and maintenance management: Implications for managing manufacturing process</p>
+          <p class="pub-meta">Saha, R., Azeem, A., Hasan, K. W., Ali, S. M., and Paul, S. K. — International Journal of System Assurance Engineering and Management 12.2 (2021)</p>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-tag">[J4]</span>
+        <div>
+          <p class="pub-title">Contextual relationships among key factors related to environmental sustainability: Evidence from an emerging economy</p>
+          <p class="pub-meta">Sabuj, S. U., Ali, S. M., Hasan, K. W., and Paul, S. K. — Sustainable Production and Consumption 27 (2021)</p>
+        </div>
+      </li>
+    </ul>
+
+    <p class="pub-group-label">In preparation</p>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <span class="pub-tag">[P1]</span>
+        <div>
+          <p class="pub-title">Stochastic Hub and Spoke Recycling Problem: An Incremental Benders Decomposition Approach</p>
+          <p class="pub-meta">Hasan, K. W. and Mirchandani, P. B.</p>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-tag">[P2]</span>
+        <div>
+          <p class="pub-title">A Case Study on Hub and Spoke Recycling for Rural Communities in Arizona</p>
+          <p class="pub-meta">Hasan, K. W. and Mirchandani, P. B.</p>
+        </div>
+      </li>
+    </ul>
+
+  </section>
+
+  <section id="skills">
+    <div class="sec-head">
+      <span class="sec-num">§05</span>
+      <h2 class="sec-title">Tools & methods</h2>
+    </div>
+    <div class="skills-wrap">
+      <span class="skill-pill">Python</span>
+      <span class="skill-pill">Julia</span>
+      <span class="skill-pill">Gurobi</span>
+      <span class="skill-pill">CPLEX</span>
+      <span class="skill-pill">R</span>
+      <span class="skill-pill">Mixed-integer programming</span>
+     <span class="skill-pill">Column generation</span>
+     <span class="skill-pill">Benders Decomposition</span>
+      <span class="skill-pill">Data visualization (HTML, Mathplotlib)</span>
+      <span class="skill-pill">Stochastic programming</span>
+      <span class="skill-pill">SQL</span>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="sec-head">
+      <span class="sec-num">§06</span>
+      <h2 class="sec-title">Contact</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="label">EMAIL</span>
+        <a href="mailto: khasan4@asu.edu">khasan4@asu.edu</a>
+      </div>
+      <div class="contact-item">
+        <span class="label">OFFICE</span>
+        <span style="font-size:15px;">Brickyard Engineering Building, Room 214</span>
+      </div>
+      <div class="contact-item">
+        <span class="label">SCHOOL</span>
+        <a href="https://search.asu.edu/profile/4201212">https://search.asu.edu/profile/4201212</a>
+      </div>
+      <div class="contact-item">
+        <span class="label">PROJECT</span>
+        <a href="https://azcres.org/">https://azcres.org/</a>
+      </div>
+    </div>
+    <div class="foot-note">© 2026 Kazi Wahadul Hasan. Optimized with confidence. <span class="edit-flag">KWH</span></div>
+  </footer>
+
+</main>
+
+</body>
+</html>
