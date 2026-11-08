@@ -309,15 +309,12 @@
 <header class="nav">
   <div class="nav-inner" style="
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 20px;
     padding: 20px 30px;
     position: relative;
   ">
-
-    <div class="nav-name">
-      Kazi Wahadul Hasan
-    </div>
 
     <!-- Hamburger Menu Button -->
     <button id="menuToggle" onclick="
@@ -334,14 +331,17 @@
         flex-direction: column;
         gap: 6px;
         padding: 8px;
-        z-index: 1001;
       ">
 
       <span style="width: 28px; height: 3px; background: #222; border-radius: 3px;"></span>
       <span style="width: 28px; height: 3px; background: #222; border-radius: 3px;"></span>
       <span style="width: 28px; height: 3px; background: #222; border-radius: 3px;"></span>
-
     </button>
+
+    <!-- Name -->
+    <div class="nav-name">
+      Kazi Wahadul Hasan
+    </div>
 
     <!-- Dropdown Navigation -->
     <nav id="navLinks" style="
@@ -349,7 +349,7 @@
       flex-direction: column;
       position: absolute;
       top: 70px;
-      right: 30px;
+      left: 30px;
       background: white;
       min-width: 200px;
       padding: 12px 0;
@@ -359,19 +359,13 @@
     ">
 
       <a href="#about" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">About</a>
-
       <a href="#research" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Research</a>
-
       <a href="#projects" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Projects</a>
-
       <a href="#experience" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Experience</a>
-
       <a href="#publications" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Publications</a>
-
       <a href="#contact" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Contact</a>
 
     </nav>
-
   </div>
 </header>
 
