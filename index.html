@@ -305,26 +305,83 @@
 
 <div class="grid-bg" aria-hidden="true"></div>
 
+
 <header class="nav">
-  <div class="nav-inner">
-    <div class="nav-name">Kazi Wahadul Hasan</div>
+  <div class="nav-inner" style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    position: relative;
+  ">
 
-    <div class="dropdown">
-      <button class="dropdown-btn" onclick="toggleMenu()">
-        Menu <span class="arrow">▾</span>
-      </button>
-
-      <nav class="nav-links" id="navLinks">
-        <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#publications">Publications</a>
-        <a href="#contact">Contact</a>
-      </nav>
+    <div class="nav-name">
+      Kazi Wahadul Hasan
     </div>
+
+    <!-- Hamburger Menu Button -->
+    <button id="menuToggle" onclick="
+      const menu = document.getElementById('navLinks');
+      const isOpen = menu.style.display === 'flex';
+      menu.style.display = isOpen ? 'none' : 'flex';
+      this.setAttribute('aria-expanded', !isOpen);
+    " aria-label="Toggle navigation" aria-expanded="false"
+      style="
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px;
+        z-index: 1001;
+      ">
+
+      <span style="width: 28px; height: 3px; background: #222; border-radius: 3px;"></span>
+      <span style="width: 28px; height: 3px; background: #222; border-radius: 3px;"></span>
+      <span style="width: 28px; height: 3px; background: #222; border-radius: 3px;"></span>
+
+    </button>
+
+    <!-- Dropdown Navigation -->
+    <nav id="navLinks" style="
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 70px;
+      right: 30px;
+      background: white;
+      min-width: 200px;
+      padding: 12px 0;
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      z-index: 1000;
+    ">
+
+      <a href="#about" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">About</a>
+
+      <a href="#research" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Research</a>
+
+      <a href="#projects" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Projects</a>
+
+      <a href="#experience" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Experience</a>
+
+      <a href="#publications" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Publications</a>
+
+      <a href="#contact" onclick="closeMenu()" style="padding: 12px 20px; text-decoration: none; color: #333;">Contact</a>
+
+    </nav>
+
   </div>
 </header>
+
+<script>
+  function closeMenu() {
+    document.getElementById('navLinks').style.display = 'none';
+    document.getElementById('menuToggle').setAttribute('aria-expanded', 'false');
+  }
+</script>
+
 
 <main class="wrap">
 
